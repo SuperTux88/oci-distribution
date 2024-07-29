@@ -374,7 +374,8 @@ impl Client {
         self.auth_store.read().await.contains_key(registry)
     }
 
-    async fn store_auth_if_needed(&self, registry: &str, auth: &RegistryAuth) {
+    /// Store the authentication information for this registry if it's not already stored in the client
+    pub async fn store_auth_if_needed(&self, registry: &str, auth: &RegistryAuth) {
         if !self.is_stored_auth(registry).await {
             self.store_auth(registry, auth.clone()).await;
         }
